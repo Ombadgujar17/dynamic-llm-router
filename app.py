@@ -105,11 +105,18 @@ def show_model_decision(stage, call_result):
 
     candidates = rationale.get("candidate_comparison", [])
     if candidates:
-        st.markdown("**Eligible candidate comparison**")
-        st.dataframe(
-            candidates,
-            use_container_width=True,
-            hide_index=True,
+        with st.expander(
+            f"Eligible candidates ({len(candidates)})",
+            expanded=True,
+        ):
+            st.dataframe(
+                candidates,
+                use_container_width=True,
+                hide_index=True,
+            )
+    else:
+        st.warning(
+            "No candidate comparison was recorded for this selection."
         )
 
     excluded = rationale.get("excluded_models", [])
